@@ -1,0 +1,73 @@
+<div class="col-xs-12 col-md-6 col-md-offset-3">
+    <!-- <button  type="button" class="btn btn-primary" (click)="openPopup()">Listado de Tags</button> -->
+          <div class="popup-overlay" *ngIf="isPopupVisible">
+              <div class="popup-content">
+                <div class="p-3 mb-2 bg-success text-white" *ngIf="exito">
+                   <h2>{{exito}}</h2>
+                </div>
+                 <button type="button" class="btn btn-danger" (click)="closePopup()">Cerrar</button>
+               </div>
+            </div>
+<div class="col-xs-12">
+    <img [src]="contacto.contactPhoto" alt="" class="img-responsive">
+</div> 
+<div class="row">
+    <div class="col-xs-12">
+    <h1> {{contacto.contactFirstName}}  {{ contacto.contactLastName}}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="btn-group" appDropdown>
+<button type="button" class="btn btn-primary dropdown-toggle">Manage Contactos<span class="caret"></span></button>
+<button type="button" class="btn btn-danger" (click)="onContacts()">Regresar</button>
+<ul class="dropdown-menu">
+    <li><a style="cursor: pointer;" (click)="onEditContacto()">Edit Contactos</a></li>
+    <li><a style="cursor: pointer;" (click)="onDeleteContacto()">Delete Contacto</a></li>
+</ul>
+        </div>
+    </div>  
+</div>
+<div class="row">
+    <div class="col-xs-12">
+    Empresa: {{ contacto.contactCompany }} | {{ countContacts }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="List-Group">
+            <span>Numeros:</span>
+            <li class="list-group-item" *ngFor="let numero of contacto.contactPhones "> 
+                Tipo: {{ numero.phoneType| json }}
+                Numero: {{ numero.phoneValue| json }}</li>
+           </ul>
+    </div>
+</div> 
+<div class="row">
+    <div class="col-xs-12">
+     Cumpleaños: {{ contacto.contactBirthday }}
+    </div>
+</div> 
+<div class="row">
+    <div class="col-xs-12">
+    Alias: {{ contacto.contactAlias }}
+    </div>
+</div> 
+<div class="row">
+ <div class="col-xs-6">
+   <ul class="List-Group">
+    <span>Correos:</span>
+    <li class="list-group-item" *ngFor="let correo of contacto.contactEmails ">{{ correo.emailValue}}</li>
+   </ul>
+ </div>
+</div> 
+<div class="row">
+    <div class="col-xs-6">
+      <ul class="List-Group">
+       <span>Tags:</span>
+       <li class="list-group-item" *ngFor="let tag of contacto.contactTags ">{{ tag.tagValue }}</li>
+      </ul>
+    </div>
+   </div> 
+</div>

@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="popup-overlay" *ngIf="isPopupVisible">
+    <div class="popup-content">
+      <div class="p-3 mb-2 bg-success text-white" *ngIf="exito">
+         <h2>{{exito}}</h2>
+      </div>
+       <button type="button" class="btn btn-danger" (click)="closePopup()">Cerrar</button>
+     </div>
+  </div>
+   <div class="col-xs-8">
+     <a class="container" style="cursor: pointer;"  class="list-group-item clearfix">
+       <div class="pull-left">
+         <p class="list-group-item-text">Id: {{ contacto.contactId }}</p>
+         <h4 class="list-group-item-heading">{{ contacto.contactFirstName }}</h4>
+         <p class="list-group-item-text">Apellido: {{ contacto.contactLastName }}</p>
+         <p class="list-group-item-text">Alias: {{ contacto.contactAlias }}</p>
+         <p class="list-group-item-text">Cumpleaños: {{ contacto.contactBirthday }}</p>
+       </div>
+       <span class="pull-right">
+         <img [src]="contacto.contactPhoto" alt="{{ contacto.contactFirstName }}" class="img-responsive" style="max-height: 50px;">
+       </span>
+     </a>
+   </div>
+    <button class="btn btn-danger pull-right" (click)="onDeleteContacto(contacto.contactId)">Eliminar</button>
+ 
+ </div>
+
+   

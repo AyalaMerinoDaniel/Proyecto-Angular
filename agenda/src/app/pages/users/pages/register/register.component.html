@@ -1,0 +1,82 @@
+<div class="col-xs-12 col-md-6 col-md-offset-3">
+ 
+<form [formGroup] ="userForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+       <div class="col-xs-12">
+        <div class="popup-overlay" *ngIf="isPopupVisible">
+          <div class="popup-content">
+            <div *ngIf="exito">
+               <h2>{{exito}}</h2>
+            </div>
+             <button type="button" class="btn btn-danger" (click)="closePopup()">Cerrar</button>
+           </div>
+        </div>
+        <div class="popup-overlay" *ngIf="isPopupVisible2">
+          <div class="popup-content">
+            <div *ngIf="exito2">
+               <h2>{{exito2}}</h2>
+            </div>
+             <button type="button" class="btn btn-danger" (click)="closePopup2()">Cerrar</button>
+           </div>
+        </div>
+         <button type="submit" class="btn btn-success" [disabled]="!userForm.valid">Save</button>
+         <button class="btn btn-danger" (click)="onSwitchMode()" type="button">
+           {{ editMode ? 'Cancelar' : 'atras' }}
+        </button>
+       </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+       <div class="form-group">
+         <label for="name">Nombre</label>
+         <input type="text" id="userFullName" class="form-control custom-input" formControlName="userFullName">
+         <div *ngIf="userForm.get('userFullName').invalid && userForm.get('userFullName').touched" style="color: red;">
+          El nombre es obligatorio
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+       <div class="col-xs-12">
+        <div class="form-group">
+          <label for="name">Usuario</label>
+          <input type="text" id="userName" class="form-control custom-input" formControlName="userName">
+          <div *ngIf="userForm.get('userName').invalid && userForm.get('userName').touched" style="color: red;">
+            El usuario es obligatorio
+          </div>
+        </div>
+       </div>
+      </div> 
+     <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="date">Correo</label>
+          <input  type="email" id="userEmail" class="form-control" formControlName="userEmail">
+          <div *ngIf="userForm.get('userEmail').invalid && userForm.get('userEmail').touched" style="color: red;">
+            El correo es obligatorio
+          </div>
+        </div>
+       </div>
+       <div class="col-xs-12">
+        <div class="form-group">
+          <label for="date">Contraseña</label>
+          <input  type="password" id="userPassword" class="form-control" formControlName="userPassword">
+          <div *ngIf="userForm.get('userPassword').invalid && userForm.get('userPassword').touched" style="color: red;">
+            El Contraseña es obligatoria
+          </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+           <label for="imagePath">Imagen</label>
+           <input type="file" (change)="handleFileInputChange($event)" (change)="capturarFile($event)" formControlName="userPhoto" accept="image/*"> 
+           <!-- <input type="text" [style.backgroundImage]="'url(' + image + ')'" *ngIf="image"> -->
+           <!-- <input type="text" formControlName="imagePath" [value]="image" readonly> -->
+        </div>
+        <div class="col-xs-2">
+        <img *ngIf="image" [src]="image" alt="Imagen">
+      </div>
+    </div>
+ </form>
+</div>

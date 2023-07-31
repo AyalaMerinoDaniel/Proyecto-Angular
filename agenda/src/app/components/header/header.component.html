@@ -1,0 +1,33 @@
+<div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+</head>
+<body>
+    <div>
+  <nav>
+    <div class="navbar">
+        <div class="logo">
+            <img src="assets/menu.png" alt=""> 
+            <span>AGENDA</span> 
+        </div>
+        <div class="menu_list">
+            <span>Menu</span>
+            <a href="#"><img src="{{ user.userPhoto}}"></a>
+            <a style="cursor: pointer;" (click)="onEditUser()"><i class="fa-solid fa-user" ></i> {{ user.userFullName }}</a>
+            <a style="cursor: pointer;"><i class="fa-solid fa-envelope"></i>{{ user.userEmail}}</a>
+            <a style="cursor: pointer;" (click)="onContacts()"><i class="fa-solid fa-address-book"></i>Contactos</a>
+            <a style="cursor: pointer;" (click)="onAboutUs()"><i class="fa-solid fa-eject"></i>Acerca De</a>
+            
+        </div>
+        <div class="menu_list">
+            <a style="cursor: pointer;" (click)="onLogout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+        </div>
+    </div>
+   </nav>
+    </div>
+</body>
+</html>
+</div>

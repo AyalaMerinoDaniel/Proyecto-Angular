@@ -1,0 +1,235 @@
+<div class="col-xs-12 col-md-8 col-md-offset-3">
+<div class="row">
+    <div class="col-xs-12">
+      <form [formGroup] ="contactForm" (ngSubmit)="onSubmit()">
+         <div class="row">
+            <div class="col-xs-12">
+              <div class="popup-overlay" *ngIf="isPopupVisible2">
+                <div class="popup-content">
+                  <div *ngIf="exito">
+                     <h2>{{exito}}</h2>
+                  </div>
+                   <button type="button" class="btn btn-danger" (click)="closePopup()">Cerrar</button>
+                 </div>
+              </div>
+              <div class="popup-overlay" *ngIf="isPopupVisible">
+                <div class="popup-content">
+                  <div *ngIf="exito2">
+                     <h2>{{exito2}}</h2>
+                  </div>
+                   <button type="button" class="btn btn-danger" (click)="closePopup2()">Cerrar</button>
+                 </div>
+              </div>
+              <button type="submit" class="btn btn-success" [disabled]="!contactForm.valid">
+                  {{ editMode ? 'Actualizar': 'Agregar' }}
+              </button>
+              <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+            </div>
+         </div>
+         <div class="row">
+           <div class="col-xs-12">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" class="form-control custom-input" placeholder="Nombre" formControlName="name">
+              <div *ngIf="contactForm.get('name').invalid && contactForm.get('name').touched" style="color: red;">
+                El Nombre es obligatorio
+            </div>
+           </div>
+          </div>
+         </div>
+          <div class="row">
+            <div class="col-xs-12">
+             <div class="form-group">
+               <label for="name">Apellido</label>
+               <input type="text" id="apellido" class="form-control custom-input" placeholder="Apellido" formControlName="apellido">
+               <div *ngIf="contactForm.get('apellido').invalid && contactForm.get('apellido').touched" style="color: red;">
+                    Apellido es obligatorio
+            </div>
+             </div>
+            </div>
+           </div>
+           <div class="row">
+            <div class="col-xs-12">
+             <div class="form-group">
+               <label for="name">Empresa</label>
+               <input type="text" id="empresa" class="form-control custom-input" placeholder="Nombre Empresa" formControlName="empresa">
+               <div *ngIf="contactForm.get('empresa').invalid && contactForm.get('empresa').touched" style="color: red;">
+                Nombre de la empresa obligatorio
+            </div>
+             </div>
+            </div>
+           </div>
+           
+<!-------------Telefonos---------------->
+<button type="button" class="btn btn-primary" (click)="createComponent()">Agregar Casa</button>
+<button type="button" class="btn btn-primary" (click)="createComponentMobile()">Agregar Movil</button>
+<button type="button" class="btn btn-primary" (click)="createComponentWhatsApp()">Agregar WhatsApp</button>
+<hr>
+<ng-template #dynamicContainer></ng-template>
+<ng-template #dynamicPhoneMobile></ng-template>
+<ng-template #dynamicPhoneWhatsApp></ng-template>
+<div class="row">
+  <div class="col-xs-12" formArrayName="phones">
+    <div class="row" *ngFor="let phoneControl of phonesControls; let i = index" [formGroupName]="i" style="margin-top: 10px;"> 
+      <div class="col-xs-8">
+      <input
+      type="text"
+      formControlName="phoneType">
+      <input
+      type="text"
+      formControlName="phoneValue">
+      <div *ngIf="phoneControl.get('phoneValue').invalid" style="color: red;">
+        <div *ngIf="phoneControl.get('phoneValue').errors.required">El numero es Requerido</div>
+       </div>
+    </div>
+    <div class="col-xs-2">
+      <button class="btn btn-danger" (click)="removePhone(i)">X</button>
+    </div>
+    <div class="col-xs-2">
+      <button class="btn btn-warning" (click)="editPhone(i)">Editar</button>
+    </div>
+  <hr>
+  </div> 
+</div> 
+</div> 
+  <hr>
+          
+<!----------------CORREOS------------------------>
+            <div class="row">
+              <div class="col-xs-12" formArrayName="correos">
+                <button type="button" class="btn btn-primary" (click)="onAddCorreo()">Add Correo</button> 
+                <div class="row" *ngFor="let correoControl of emailsControls; let i = index" [formGroupName]="i" style="margin-top: 10px;"> 
+                  <div class="col-xs-6">
+                  <input
+                  type="text"
+                  class="form-control custom-input"
+                  placeholder="Email"
+                  formControlName="emailValue">
+                  <div *ngIf="correoControl.get('emailValue').invalid" style="color: red;">
+                  <div *ngIf="correoControl.get('emailValue').errors.required">El correo es Requerido</div>
+                  <div *ngIf="correoControl.get('emailValue').errors.email">El correo no es valido</div>
+                  </div>
+                </div>
+                <div class="col-xs-2">
+                  <button class="btn btn-danger" (click)="onDeleteCorreo(i)">X</button>
+                </div>
+                <div class="col-xs-2">
+                  <button class="btn btn-warning" (click)="editEmail(correoControl.value, i)">Editar</button>
+                </div>
+              <hr>
+              </div>
+            </div>  
+          </div> 
+
+          <div class="row">
+           <div class="col-xs-12">
+             <div class="form-group">
+               <label for="date">Cumpleaños</label>
+               <input type="date" id="cumpleaños" class="form-control" formControlName="cumpleaños">
+               <div *ngIf="contactForm.get('cumpleaños').invalid && contactForm.get('cumpleaños').touched" style="color: red;">
+                Fecha de cumpleaños obligatoria
+               </div>
+             </div>
+            </div>
+           </div>
+           <div class="row">
+            <div class="col-xs-12">
+             <div class="form-group">
+               <label for="name">Alias</label>
+               <input type="text" id="alias" class="form-control custom-input" placeholder="Alias" formControlName="alias">
+              <div *ngIf="contactForm.get('alias').invalid && contactForm.get('alias').touched" style="color: red;">
+                Alias es obligatorio
+              </div>
+             </div>
+            </div>
+           </div>
+           <div class="row">
+            <div class="col-xs-12">
+             <div class="form-group">
+               <label for="name">Notas</label>
+               <input type="text" id="notes" class="form-control custom-input" placeholder="Notas" formControlName="notes">
+               <div *ngIf="contactForm.get('notes').invalid && contactForm.get('notes').touched" style="color: red;">
+                Las notas son obligatorias
+            </div>
+             </div>
+            </div>
+           </div>
+           <div class="row">
+            <div class="col-xs-8">
+               <label for="imagePath">Imagen</label>
+               <input type="file" (change)="handleFileInputChange($event)" (change)="capturarFile($event)" formControlName="imagePath" accept="image/*"> 
+            </div>
+            <div class="col-xs-2">
+            <img *ngIf="image" [src]="image" alt="Imagen" #miPhoto>
+          </div>
+        </div>
+        <hr>
+        <!----------------TAGS------------------------>
+    <button type="button" class="btn btn-primary" (click)="toggleVisibility()">Tag</button>
+      <div [hidden]="!isVisible">
+        <hr>
+        <button  type="button" class="btn btn-primary" (click)="openPopup3()">Listado de Tags</button>
+          <div class="popup-overlay" *ngIf="isPopupVisible3">
+              <div class="popup-content">
+                <div class="row">
+                  <h1>Selecciona una Etiqueta</h1>
+                   <div class="col-xs-12" formArrayName="tags">
+                    <ul>
+                      <div *ngFor="let tag of tagsLocalStorage; let i = index" (click)="seleccionarEtiqueta(tag.tagValue); onAddTag()">
+                        <div class="col-xs-10">
+                        <div class="col-xs-6">
+                        <span style="cursor: pointer;">{{tag.tagValue}}</span>
+                        </div>
+                        <div class="col-xs-2">
+                          <button class="btn btn-danger" (click)="deleteTag(i)">X</button>
+                        </div>
+                        </div>
+                      </div>
+                    </ul> 
+                    <hr>
+                    <!-- <select (change)="seleccionarEtiqueta($event.target.value)">
+                      <option *ngFor="let etiqueta of tagsLocalStorage">{{ etiqueta.tagValue }}</option>
+                    </select> -->
+                    
+                      <form>
+                        <div class="col-xs-6">
+                        <input type="text" class="form-control custom-input" (input)="newTag = $event.target.value" placeholder="Agregar Nueva Etiqueta">
+                        </div>
+                        <button type="button" class="btn btn-primary" style="cursor: pointer;" (click)="addTagLocalStorage()">Agregar Nueva Tag</button>
+                      </form>
+                   <p>Etiqueta seleccionada: {{ selectedTag }}</p>
+                  <hr>
+                  <!-- <button type="button" class="btn btn-primary" (click)="onAddTag()">Add TAG</button>  -->
+                </div>  
+                </div>
+                <button type="button" class="btn btn-danger" (click)="closePopupTag()">Cerrar</button>
+              </div>
+          </div>
+
+
+        <div class="row">
+          <div class="col-xs-12" formArrayName="tags">
+            <div class="row" *ngFor="let tagsC of tagsControls; let i = index" [formGroupName]="i" style="margin-top: 10px;"> 
+              <div class="col-xs-2">
+              <input formControlName="tagId" class="d-none">
+              </div>
+              <div class="col-xs-4">
+              <input type="text" class="form-control custom-input"
+              formControlName="tagValue"  readonly>
+            </div>
+            <div class="col-xs-2">
+              <button class="btn btn-danger" (click)="onDeleteTag(i)">X</button>
+            </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-2">
+            </div>
+          </div>
+          </div>
+        </div>  
+      </div> 
+      </div> 
+      </form>
+    </div>
+  </div>
+</div>

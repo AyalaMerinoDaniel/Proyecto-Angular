@@ -1,0 +1,26 @@
+<div [formGroup]="dynamicForm" class="row" >
+  <div class="col-xs-2">
+    <img src="assets/hogar.png" alt="" />
+  </div>
+  <div class="col-xs-10">
+    <label>
+      <div class="row">
+        <div class="col-xs-6">
+        <input type="text" class="form-control custom-input" placeholder="Número de móvil" formControlName="phoneValue" (input)="checkDigits()">
+        <div *ngIf="dynamicForm.get('phoneValue').invalid" style="color: red;">
+          <div *ngIf="dynamicForm.get('phoneValue').errors.required">El numero es Requerido</div>
+          <div class="error" *ngIf="exceededDigits" >El numero debe tener solo 7 digitos</div>
+         </div>
+        </div>
+        <div class="col-xs-4">
+          <button  type="submit" class="btn btn-success" (click)="addPhone('phone')"  [disabled]="!dynamicForm.valid">
+            {{ editMode ? 'Actualizar' : 'Agregar' }} 
+          </button>
+        </div>
+        </div>
+    </label>
+  </div>
+  <!-- <div class="col-xs-10">
+    <div class="error" *ngIf="exceededDigits" >El numero debe tener solo 7 digitos</div>
+    </div> -->
+</div>

@@ -1,0 +1,87 @@
+input.ng-invalid.ng-touched{
+border: 1px solid red;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+}
+
+h1 {
+  color: #333; /* Color del texto */
+  font-size: 24px; /* Tamaño de fuente */
+  font-weight: bold; /* Grosor de fuente */
+  text-align: center; /* Alineación de texto */
+  /* Otros estilos adicionales según tus necesidades */
+}
+
+li {
+  color: #333; /* Color del texto */
+  font-size: 16px; /* Tamaño de fuente */
+  line-height: 1.5; /* Altura de línea */
+  list-style: disc;
+}
+
+select {
+  width: 200px; /* Ancho del elemento de selección */
+  padding: 8px; /* Espaciado interno (padding) */
+  font-size: 14px; /* Tamaño de fuente */
+  border: 1px solid #ccc; /* Borde del elemento */
+  border-radius: 4px; /* Borde redondeado */
+  background-color: #fff; /* Color de fondo */
+  /* Otros estilos adicionales según tus necesidades */
+}
+
+/* Estilos para las opciones del elemento de selección */
+select option {
+  padding: 8px; /* Espaciado interno (padding) */
+  font-size: 14px; /* Tamaño de fuente */
+  /* Otros estilos adicionales según tus necesidades */
+}
+
+ .custom-input {
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #f9f9f9; /* Color de fondo */
+}
+.custom-input{
+  filter: blur(2px);
+  filter: brightness(150%);
+  filter: contrast(200%);
+  filter: sepia(80%);
+  filter: saturate(4000%);
+} 
+
+input:focus {
+  outline: none; /* Quita el contorno de enfoque predeterminado */
+  border-color: #007bff; /* Cambia el color del borde cuando el campo está en foco */
+  box-shadow: 0 0 0 2px #007bff33; /* Agrega una sombra cuando el campo está en foco */
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,9 @@
+<app-toolbar *ngIf="getRutaActual() !== '/auth/login' && getRutaActual() !== '/auth/registro'"></app-toolbar>
+<div class="container">
+  <div class="menu" *ngIf="getRutaActual() !== '/auth/login' && getRutaActual() !== '/auth/registro'">
+    <app-header ></app-header>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

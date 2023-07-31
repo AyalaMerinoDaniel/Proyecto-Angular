@@ -1,0 +1,18 @@
+<div class="paginator">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+    <ng-container *ngIf="totalPages <= visiblePages">
+      <!-- Mostrar todos los botones de página cuando el total de páginas es menor o igual a la cantidad visible -->
+      <ng-container *ngFor="let page of totalPagesArray">
+        <button (click)="goToPage(page)" [ngClass]="{ 'active': currentPage === page }">{{ page }}</button>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="totalPages > visiblePages">
+      <!-- Mostrar solo algunos botones de página con puntos suspensivos -->
+      <ng-container *ngFor="let page of visiblePagesArray">
+        <button (click)="goToPage(page)" [ngClass]="{ 'active': currentPage === page }">{{ page }}</button>
+      </ng-container>
+      <span *ngIf="visiblePagesArray[visiblePagesArray.length - 1] < totalPages">...</span>
+      <button *ngIf="visiblePagesArray[visiblePagesArray.length - 1] < totalPages" (click)="goToPage(totalPages)">{{ totalPages }}</button>
+    </ng-container>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
+  </div>

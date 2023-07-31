@@ -1,0 +1,50 @@
+<div class="col-xs-12 col-md-6 col-md-offset-3">
+<div class="row">
+    <div class="col-xs-12">
+      <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box"><p style="color: white" > Loading... </p></ngx-spinner> 
+    <button class="btn btn-success" (click)="onNewContacto()">Nuevo Contacto</button>
+    </div>
+    <hr>
+</div>
+<div class="row">
+    <div class="popup-overlay" *ngIf="isPopupVisible">
+        <div class="popup-content">
+          <div  *ngIf="exito">
+             <h2>{{exito}}</h2>
+          </div>
+           <button type="button" class="btn btn-danger" (click)="closePopup()">Cerrar</button>
+         </div>
+      </div>
+</div>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Alias</th>
+        <th scope="col">Cumpleaños</th>
+        <th scope="col">Foto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  *ngFor="let contactoEl of contactos; let i = index">
+        <th scope="row">{{ contactoEl.contactId}}</th>
+        <td (click)="onDetail(i)">{{ contactoEl.contactFirstName }}</td>
+        <td (click)="onDetail(i)">{{ contactoEl.contactLastName }}</td>
+        <td (click)="onDetail(i)">{{ contactoEl.contactAlias }}</td>
+        <td (click)="onDetail(i)">{{ contactoEl.contactBirthday }}</td>
+        <td (click)="onDetail(i)"><img [src]="contactoEl.contactPhoto" alt="{{ contactoEl.contactFirstName }}" class="img-responsive" style="max-height: 50px;"></td>
+        <td><button class="btn btn-warning" (click)="onDetail(i)">Detalle</button></td>
+        <td><button class="btn btn-danger pull-right" (click)="onDeleteContacto(i)">Eliminar</button></td>
+        
+      </tr>
+    </tbody>
+  </table>
+  <app-paginator [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  [totalPagesArray]="totalPagesArray"
+  (pageChange)="goToPage($event)"></app-paginator>
+</div>
+ 

@@ -1,0 +1,35 @@
+<div [formGroup]="whatsAppForm" class="row align-items-center">
+  <div class="col-xs-2">
+    <img src="assets/whatsapp.png" alt="Mobile" class="img-fluid">
+  </div>
+  <div class="col-xs-10">
+    <div class="row">
+      <div class="col-xs-2">
+        <input type="text" class="form-control custom-input" placeholder="+52" formControlName="countryCode">
+        <div *ngIf="whatsAppForm.get('countryCode').invalid && whatsAppForm.get('countryCode').touched"
+          style="color: red;">
+          Ingresa Codigo (ejemplo: +52)
+        </div>
+      </div>
+      <div class="col-xs-2">
+        <input type="text" class="form-control custom-input" placeholder="Lada" formControlName="areaCode" (input)="checkDigitsLada()">
+        <div *ngIf="whatsAppForm.get('areaCode').invalid && whatsAppForm.get('areaCode').touched" style="color: red;">
+          <div *ngIf="whatsAppForm.get('areaCode').errors.required">La lada es Requerida</div>
+          <div class="error" *ngIf="exceededDigitsLada" >Lada solo lleva 3 digitos</div>
+         </div>
+      </div>
+      <div class="col-xs-4">
+        <input type="text" class="form-control custom-input" placeholder="Número de móvil" formControlName="phoneValue"
+          (input)="checkDigits()">
+          <div *ngIf="whatsAppForm.get('phoneValue').invalid" style="color: red;">
+            <div *ngIf="whatsAppForm.get('phoneValue').errors.required">La numero es Requerido</div>
+            <div class="error" *ngIf="exceededDigits" >El numero solo lleva 7 digitos</div>
+           </div>
+      </div>
+      <div class="col-xs-3">
+        <button type="button" class="btn btn-success" (click)="addPhone('whatsapp')"
+          [disabled]="!whatsAppForm.valid">{{ editMode ? 'Actualizar' : 'Agregar' }} </button>
+      </div>
+    </div>
+  </div>
+</div>

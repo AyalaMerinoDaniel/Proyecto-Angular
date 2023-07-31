@@ -1,0 +1,28 @@
+<div [formGroup]=" dynamicMovilForm" class="row align-items-center"> 
+  <div class="col-xs-2">
+    <img src="assets/telefono.png" alt="Mobile" class="img-fluid">
+  </div>
+  <div class="col-xs-10">
+    <div class="row">
+       <div class="col-xs-2">
+        <input type="text" class="form-control custom-input" placeholder="Lada" formControlName="areaCode" (input)="checkDigitsLada()">
+        <div *ngIf="dynamicMovilForm.get('areaCode').invalid" style="color: red;">
+          <div *ngIf="dynamicMovilForm.get('areaCode').errors.required">La lada es Requerida</div>
+          <div class="error" *ngIf="exceededDigitsLada" >Lada solo lleva 3 digitos</div>
+         </div>
+       </div>
+       <div class="col-xs-6">
+        <input type="text" class="form-control custom-input" placeholder="Número de móvil" formControlName="phoneValue" (input)="checkDigits()">
+        <div *ngIf="dynamicMovilForm.get('phoneValue').invalid && dynamicMovilForm.get('phoneValue').touched" style="color: red;">
+          <div *ngIf="dynamicMovilForm.get('phoneValue').errors.required">El numero es Requerido</div>
+          <div class="error" *ngIf="exceededDigits" >El numero debe tener solo 7 digitos</div>
+         </div>
+       </div>
+       <div class="col-xs-4">
+        <button type="button" class="btn btn-success" (click)="addPhone('mobile')" [disabled]="!dynamicMovilForm.valid">
+          {{ editMode ? 'Actualizar' : 'Agregar' }} 
+        </button>
+      </div>
+    </div>
+    </div>
+  </div>
