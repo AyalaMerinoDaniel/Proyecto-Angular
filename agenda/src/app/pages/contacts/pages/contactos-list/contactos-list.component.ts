@@ -26,12 +26,10 @@ export class ContactosListComponent implements OnInit, OnDestroy {
   isPopupVisible = false;
   public page!: number;
   currentPage = 1;
-  totalPages: number;
+  totalPages: number ;
   totalPagesArray: number[] = [];
   visiblePages = 4;
-  private pageTimer: any;
-
-  
+  pageTimer: any;
 
   constructor(private contactoService: ContactoService, 
     private router: Router, 

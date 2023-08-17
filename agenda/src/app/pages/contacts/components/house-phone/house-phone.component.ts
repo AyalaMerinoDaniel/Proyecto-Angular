@@ -14,6 +14,7 @@ export class HousePhoneComponent implements OnInit{
  exceededDigits: boolean = false;
  @Input() phone;
  editMode = false;
+ @Input() parentMethod!: () => void;
  
 
   constructor(private fb: FormBuilder){
@@ -41,5 +42,13 @@ export class HousePhoneComponent implements OnInit{
   
   checkDigits(){
     this.exceededDigits = this.dynamicForm.value.phoneValue.length > 7;       
+  }
+
+  onCancelClick(): void {
+
+    if (this.parentMethod) {
+      console.log(this.parentMethod());
+      this.parentMethod();
+    }
   }
 }

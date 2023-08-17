@@ -23,7 +23,7 @@
           (input)="checkDigits()">
           <div *ngIf="whatsAppForm.get('phoneValue').invalid" style="color: red;">
             <div *ngIf="whatsAppForm.get('phoneValue').errors.required">La numero es Requerido</div>
-            <div class="error" *ngIf="exceededDigits" >El numero solo lleva 7 digitos</div>
+            <div class="error" *ngIf="exceededDigits" >El numero solo lleva 3 digitos</div>
            </div>
       </div>
       <div class="col-xs-3">

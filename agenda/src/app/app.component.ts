@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from './pages/auth/pages/login/login.service';
+import { LoginService } from './pages/auth/services/login.service';
 import { ContactoService } from './pages/contacts/services/contacto.service';
 import { ResultModelUsers, UserModel } from './pages/users/models/user.model';
 import { RegisterService } from './pages/users/services/register.service';

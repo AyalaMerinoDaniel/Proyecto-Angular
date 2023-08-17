@@ -1,8 +1,9 @@
-import { Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { Params, ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { LocalstorageService } from 'src/app/services/localstorage.service';
-import { LoginService } from 'src/app/pages/auth/pages/login/login.service';
+import { LoginService } from 'src/app/pages/auth/services/login.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,12 +12,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['styles.css']
   
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit, OnDestroy{
   users;
   user;
   id = 1;
   rutaActual: string;
   count: number;
+  subscription: Subscription;
   
 
 constructor(private route: ActivatedRoute, 
@@ -27,31 +29,37 @@ constructor(private route: ActivatedRoute,
 
 ngOnInit(){
    this.users= this.localStorageService.getItem('users');
-  //this.users = this.cookieService.get('users');
-  console.log(this.users);
-  this.user = this.users[this.id];
-  console.log(this.user);
-  
-  this.localStorageService.userUpdate$.subscribe(usersUpdate=>{
+   if (this.users && this.users.length > this.id) {
+    this.user = this.users[this.id];
+    console.log('User:', this.user);
+  }
+  this.editDataUser();
+ 
+  }
+
+editDataUser(){
+  if (this.localStorageService.userUpdate$) {
+  this.subscription = this.localStorageService.userUpdate$.subscribe(usersUpdate=>{
     if (usersUpdate && usersUpdate.length > 1) {
     this.users = usersUpdate;
     this.user = this.users[this.id];
     }
   });
-  }
+}
+}
 
 
 onEditUser(){
   this.router.navigate(['/users/',this.id,'edit']);
- //this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
+ 
 }
 
 onContacts(){
-  this.router.navigate(['/contact'], {relativeTo: this.route})
+  this.router.navigate(['/contact']);
 }
 
 onAboutUs(){
-  this.router.navigate(['/about/about'], {relativeTo: this.route})
+  this.router.navigate(['/about/about']);
 }
 
 onLogout(){
@@ -66,12 +74,12 @@ onLogout(){
       this.loginService.logout();
     }
   });
-  // const confirmation = window.confirm('¿Estás seguro de cerrar la Sesión?');
-  //    if(confirmation){
-  //     this.loginService.logout();
-  //  }else{
-  //   alert('Acción cancelada');
-  //  }
+}
+
+ngOnDestroy(): void {
+  if (this.subscription) {
+    this.subscription.unsubscribe();
+  }
 }
 
 

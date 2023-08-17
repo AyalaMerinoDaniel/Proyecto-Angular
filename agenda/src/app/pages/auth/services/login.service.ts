@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from "rxjs";
-import { LoginResponseData } from '../../models/login.model';
+import { Observable, Subscription, tap } from "rxjs";
+import { LoginResponseData } from '../models/login.model';
 import { BehaviorSubject } from 'rxjs';
 import { apiUrl } from 'src/app/environment/environmet-urls';
 import { Router } from '@angular/router';
@@ -9,13 +9,15 @@ import { LocalstorageService } from 'src/app/services/localstorage.service';
 import { status } from 'src/app/enums/enum.enum';
 
 @Injectable({ providedIn: 'root' })
-export class LoginService {
+export class LoginService implements OnDestroy{
 
   user = new BehaviorSubject<LoginResponseData>(null);
   currentDateTime
-  private tokenExpirationTimer: any;
+  newCurrentDateTime;
+  tokenExpirationTimer: any;
   private headers = new HttpHeaders().set('Content-Type','application/json').set('X-API-Key' , '7802c4c0');
   private headers2 = new HttpHeaders().set('Content-Type','application/json').set('Authorization', 'Bearer {}').set('X-API-Key' , '7802c4c0')
+  subscription: Subscription;
 
  constructor(private http: HttpClient, 
   private router: Router,
@@ -53,18 +55,18 @@ export class LoginService {
               return;
           }
            return this.http.post<LoginResponseData>(
-            apiUrl.baseUrl+'/auth/refresh',
+            apiUrl.baseUrl+'auth/refresh',
            {
             refreshToken: refreshToken
            },
            {headers: this.headers}).pipe(
             tap(resData => {
-            const newCurrentDateTime = new Date();
-            newCurrentDateTime.setMinutes(newCurrentDateTime.getMinutes() + 2);
-            console.log("refreshToken:"+resData.result.expiresAt, newCurrentDateTime);
+            this.newCurrentDateTime = new Date();
+            this.newCurrentDateTime.setMinutes(this.newCurrentDateTime.getMinutes() + 2);
+            console.log("refreshToken:"+resData.result.expiresAt, this.newCurrentDateTime);
               this.handleAuthentication(
                 resData.result.accessToken,
-                newCurrentDateTime,
+                this.newCurrentDateTime,
                 refreshToken
               );
               window.alert('El token se refresco.');
@@ -110,14 +112,14 @@ export class LoginService {
         const timeDifference = expirationDate.getTime() - currentDate.getTime();
         if (timeDifference > 0) {
           this.tokenExpirationTimer = setTimeout(() => {
-            this.refreshToken().subscribe();
+           this.subscription = this.refreshToken().subscribe();
           }, timeDifference);
         } else {
           this.logout();
         }
       }
 
-      private handleAuthentication(
+      handleAuthentication(
         token: string,
         expiresIn: Date,
         refreshToken: string
@@ -145,9 +147,10 @@ export class LoginService {
         }
       }
 
-      getToken(): string {
-        return localStorage.getItem('refreshToken');
+      ngOnDestroy(): void {
+          if(this.subscription){
+            this.subscription.unsubscribe();
+          }
       }
       
-
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable} from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LoginService } from '../pages/auth/pages/login/login.service';
+import { LoginService } from '../pages/auth/services/login.service';
 import { status } from '../enums/enum.enum';
 import Swal  from 'sweetalert2';
 

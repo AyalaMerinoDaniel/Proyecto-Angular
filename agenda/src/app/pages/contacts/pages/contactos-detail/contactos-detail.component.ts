@@ -17,6 +17,7 @@ export class ContactosDetailComponent implements OnInit{
   exito: string[] = null;
   countContacts: number;
   isPopupVisible = false;
+  contactPhoto: string;
 
   constructor(private contactService: ContactoService, 
               private route: ActivatedRoute, 
@@ -41,7 +42,6 @@ export class ContactosDetailComponent implements OnInit{
 
   onEditContacto(){
     this.router.navigate(['/contact/',this.id,'edit']);
-  
   }
 
   onDeleteContacto(){
@@ -62,17 +62,13 @@ export class ContactosDetailComponent implements OnInit{
 
   }
 
-  // openPopup(): void {
-  //   this.isPopupVisible = true;
-  // }
-  
   closePopup(): void {
     this.isPopupVisible = false;
-    this.router.navigate(['/contact/contactos'], {relativeTo: this.route});
+    this.router.navigate(['/contact/contactos']);
   }
   
   onContacts(){
-    this.router.navigate(['/contact/contactos'], {relativeTo: this.route})
+    this.router.navigate(['/contact/contactos']);
   }
 
 }

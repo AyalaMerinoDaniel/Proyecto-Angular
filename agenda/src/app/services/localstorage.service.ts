@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class LocalstorageService {
   private usuarioUpdateSubject = new BehaviorSubject<any[]>([]);
   userUpdate$ = this.usuarioUpdateSubject.asObservable();
+  localStorageService: {};
   constructor() { 
     const userUpdate = JSON.parse(localStorage.getItem('usuarioActual'));
     this.usuarioUpdateSubject.next(userUpdate);
@@ -19,7 +20,12 @@ export class LocalstorageService {
 
   getItem(key: string): any {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
+    try {
+      return JSON.parse(item); // Parse the JSON value
+    } catch (error) {
+      console.error('Error parsing JSON from localStorage:', error);
+      return null; // Return null if parsing fails or if the key doesn't exist
+    }
   }
 
   actualizarElemento (clave: string, indice: number, nuevoValor: any) {

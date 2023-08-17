@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef, ComponentRef} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { ContactModel, Email, Phone} from '../../models/contactos.model';
@@ -18,7 +18,10 @@ import { CountContactsService } from 'src/app/services/count-contacts.service';
 })
 export class ContactosEditComponent implements OnInit{
   @ViewChild('dynamicContainer', { read: ViewContainerRef }) dynamicContainer: ViewContainerRef;
+  dynamicComponentRef?: ComponentRef<HousePhoneComponent>;
+
   @ViewChild('dynamicContainer', { read: ViewContainerRef }) dynamicPhoneMobile: ViewContainerRef;
+
   @ViewChild('dynamicContainer', { read: ViewContainerRef }) dynamicPhoneWhatsApp: ViewContainerRef;
   @ViewChild('miPhoto', { static: false }) miPhoto: ElementRef;
 
@@ -457,6 +460,7 @@ editPhone(index : number){
 get phonesControls(){
  return (this.contactForm.get('phones') as FormArray).controls;
 }
+
 createComponent(){
   const factory = this.componentFactoryResolver.resolveComponentFactory(HousePhoneComponent);
   this.dynamicContainer.clear();
@@ -466,14 +470,24 @@ createComponent(){
   addPhone.subscribe(phoneData=>{
     console.log(phoneData);
     this.editedPhone(phoneData);
-  });
+  }); 
 
- 
+  this.dynamicComponentRef.instance.parentMethod = () => {
+    this.closeComponent();
+  };
 }
+
+closeComponent(){
+  if (this.dynamicComponentRef) {
+    this.dynamicComponentRef.destroy();
+  }
+}
+
 createComponentMobile(){
   const factory = this.componentFactoryResolver.resolveComponentFactory(MovilPhoneComponent);
   this.dynamicPhoneMobile.clear();
   const componentRef = this.dynamicPhoneMobile.createComponent(factory);
+  
 
   const addPhone= componentRef.instance.formDataSubmitted;
   addPhone.subscribe(phoneData=>{
